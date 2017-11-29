@@ -10,21 +10,27 @@ public class Stack implements Subject{
 	
 	private List<Integer> stackCont;
 	private List<View> lView;
+	private List<Observer> lObs;
 	
 	public Stack() {
 		stackCont = new ArrayList<Integer>();
 		lView = new ArrayList<View>();
+		lObs = new ArrayList<Observer>();
 	}
 	
 	@Override
 	public void Attach(Observer obs) {
-		// TODO Auto-generated method stub
+		lObs.add(obs);
 		
 	}
 
 	@Override
 	public void Detach(Observer obs) {
-		// TODO Auto-generated method stub
+		for (Observer ob : lObs) {
+			if (ob.equals(obs)) {
+				lObs.remove(ob);
+			}
+		}
 		
 	}
 
