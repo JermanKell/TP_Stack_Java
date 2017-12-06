@@ -17,14 +17,12 @@ public class Stack implements Subject{
 		stackCont = new ArrayList<Integer>();
 		lView = new ArrayList<View>();
 		lObs = new ArrayList<Observer>();
-	}
-	
+	}	
 	
 	public void Attach(Observer obs) {
 		lObs.add(obs);
 		nbObs++;
 	}
-
 	
 	public void Detach(Observer obs) {
 		for (Observer ob : lObs) {
@@ -34,12 +32,13 @@ public class Stack implements Subject{
 		}
 		
 	}
-
 	
 	public void Notify() {
 		for (Observer obs : lObs) 
-			obs.update(stackCont);
+			obs.update(stackCont);		
+	}	
+	
+	public void run() {
 		
 	}
-	
 }
