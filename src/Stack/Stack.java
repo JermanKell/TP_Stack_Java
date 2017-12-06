@@ -21,7 +21,6 @@ public class Stack implements Subject{
 	
 	
 	public void Attach(Observer obs) {
-		
 		lObs.add(obs);
 		nbObs++;
 	}

@@ -3,11 +3,21 @@ package View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class View {
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class View extends JFrame{
+	
 	private List<Integer> lToDisplay;
 	private int id = 0;
+	private JLabel label = new JLabel();
 	
 	public View() {
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+	    this.setSize(200, 80);
+	    
 		lToDisplay = new ArrayList<Integer>();
 		id++;
 	}
@@ -19,7 +29,7 @@ public class View {
 	 * Si le sous tableau n'est pas égal a ce qui est recupere, alors on assigne le nouveau sous tableau
 	 *
 	 */
-	public void Update(List<Integer> stContent) {
+	public void update(List<Integer> stContent) {
 		int startIndex = 0;
 		int endIndex = 0;
 		if (id == 1) {
@@ -40,8 +50,16 @@ public class View {
 		}
 	}
 
+	/*
+	 * Methode liee a l'affichage graphique du contenu des sous tableaux propres a chaque vue
+	 * (des champs textes suffisent)
+	 */
 	public void ListToDisp() {
 		
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 
