@@ -11,6 +11,7 @@ public class Stack implements Subject{
 	private List<Integer> stackCont;
 	private List<View> lView;
 	private List<Observer> lObs;
+	private int nbObs = 0; 
 	
 	public Stack() {
 		stackCont = new ArrayList<Integer>();
@@ -18,13 +19,14 @@ public class Stack implements Subject{
 		lObs = new ArrayList<Observer>();
 	}
 	
-	@Override
+	
 	public void Attach(Observer obs) {
-		lObs.add(obs);
 		
+		lObs.add(obs);
+		nbObs++;
 	}
 
-	@Override
+	
 	public void Detach(Observer obs) {
 		for (Observer ob : lObs) {
 			if (ob.equals(obs)) {
@@ -34,9 +36,10 @@ public class Stack implements Subject{
 		
 	}
 
-	@Override
+	
 	public void Notify() {
-		// TODO Auto-generated method stub
+		for (Observer obs : lObs) 
+			obs.update(stackCont);
 		
 	}
 	
