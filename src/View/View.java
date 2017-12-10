@@ -1,67 +1,113 @@
 package View;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.*;
+import javax.swing.*;
+import Stack.Stack;
+import Observer_pattern.Observer;
 
 public class View extends JFrame{
 	
-	private List<Integer> lToDisplay;
-	private int id = 0;
-	private JLabel label = new JLabel();
+	/** Pile*/
+	private Stack stack;
 	
-	public View() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
-	    this.setSize(200, 80);
+	/** Type de fenêtre*/
+	private int id;
+	
+	/** Champ pour la fenêtre n°1*/
+	private JLabel label;
+	
+	/** Champ pour la fenêtre n°2*/
+	private JList<String> jlist;
+	
+	/** Constructeur de la fenêtre*/
+	public View(int typeView, Stack stack) {
+		this.stack = stack;
+		id = typeView;
+		
+		setTitle(Integer.toString(id));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setResizable(false);
+		setAlwaysOnTop(true);
+	    ConfigureView();
+	    setVisible(true);
 	    
-		lToDisplay = new ArrayList<Integer>();
-		id++;
+	    // Ajoute la fenêtre en tant qu'observateur de la pile
+	    this.stack.Attach(new Observer(){
+	      public void update(List<Integer> stContent) {
+	    	  updateField(stContent);
+	      }
+	    });
 	}
 	
-	/*
-	 * Fonction assurant la mise a jour du sous tableau de valeurs propre a chaque vue en fonction de leur id
-	 * id = 1 => Affichage des 10 premiers nombres du dessus
-	 * id = 2 => Affichage des 5 derniers nombres du dessous
-	 * Si le sous tableau n'est pas égal a ce qui est recupere, alors on assigne le nouveau sous tableau
-	 *
-	 */
-	public void update(List<Integer> stContent) {
-		int startIndex = 0;
-		int endIndex = 0;
-		if (id == 1) {
-			startIndex = stContent.size()-10;
-			if (startIndex < stContent.size()) {
-				startIndex = 0;
-				endIndex = stContent.size();
-			}
-		}		
-		
-		if (id == 2) {
-			if (stContent.size() < 5)	endIndex = stContent.size();
-			else endIndex = 5;
-		}
-		
-		if (!lToDisplay.equals(stContent.subList(startIndex, endIndex))) {
-			lToDisplay = stContent.subList(startIndex, endIndex);
-		}
-	}
-
-	/*
-	 * Methode liee a l'affichage graphique du contenu des sous tableaux propres a chaque vue
-	 * (des champs textes suffisent)
-	 */
-	public void ListToDisp() {
-		
+	/** Ferme la fenêtre*/
+	public void Quit() {
+		dispose();
 	}
 	
+	/** Accesseur du type de la fenêtre*/
 	public int getId() {
 		return id;
 	}
-
-
-
+	
+	/** Configure la fenêtre à sa creation*/
+	private void ConfigureView() {
+		switch(id) {
+		//fenêtre qui affiche le sommet de la pile
+		case 1:
+			label = new JLabel();
+			label.setHorizontalAlignment(JLabel.CENTER);
+			getContentPane().add(label, BorderLayout.CENTER);
+			setSize(250, 60);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/ 4, Toolkit.getDefaultToolkit().getScreenSize().height / 4);
+			break;
+		//fenêtre qui affiche les 5 valeurs depuis le bas de la pile
+		case 2:
+			jlist = new JList<String>();
+			DefaultListCellRenderer centerRenderer = new DefaultListCellRenderer();
+			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			jlist.setCellRenderer(centerRenderer);
+			getContentPane().add(jlist, BorderLayout.CENTER);
+			setSize(250, 200);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/ 2, Toolkit.getDefaultToolkit().getScreenSize().height / 4);
+			break;
+		//mauvais paramêtre: ferme la fenêtre
+		default:
+			Quit();
+		}
+	}
+	
+	/**
+	 * Fonction assurant la mise a jour du sous tableau de valeurs propre a chaque vue en fonction de leur id
+	 * id = 1 => Affichage du premier nombre du dessus
+	 * id = 2 => Affichage des NbBasPile=5 derniers nombres du dessous
+	 */
+	private void updateField(List<Integer> stContent) {
+		int sizeStack = stContent.size();
+		switch(id) {
+			case 1:
+				if(sizeStack > 0)
+					label.setText(Integer.toString(stContent.get(stContent.size() -1)));
+				else
+					label.setText("pile vide");
+				break;
+			case 2:
+				int NbBasPile = 5;
+				
+				DefaultListModel<String> dlm = new DefaultListModel<String>();
+				jlist.setModel(dlm);
+				
+				if(sizeStack >= NbBasPile)
+					for(int i = NbBasPile-1; i >= 0; i--)
+						dlm.addElement(Integer.toString(stContent.get(i)));	
+				else if(sizeStack > 0)
+					for (int i = sizeStack-1; i>= 0; i--)
+						dlm.addElement(Integer.toString(stContent.get(i)));
+				else
+					dlm.addElement("pile vide");
+				break;
+		}
+	}
 }

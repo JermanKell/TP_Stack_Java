@@ -1,22 +1,40 @@
 package Main;
 
 import java.util.Scanner;
-import Observer_pattern.*;
+import java.util.concurrent.TimeUnit;
+
 import Stack.*;
 import View.*;
 
 public class Main {
 
 	public static void main(String[] args) {
-		
-		View v1 = new View();
-		View v2 = new View();
-		System.out.println(v1.getId());
-		System.out.println(v2.getId());
+		Stack pile = new Stack();
+		new View(1, pile);
+		new View(2, pile);
+		pile.Clear();
+		try {
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(5);
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(3);
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(12);
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(9);
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(63);
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(11);
+			TimeUnit.SECONDS.sleep(2);
+			pile.Push(2);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		//Scanner sc = new Scanner(System.in);
 		
-		// Mettre ici le public void run() de la pile
-		// Lancer et initialiser les deux vues
 		
 		/*while (true) {
 			System.out.println("Which action must I do ?\n");

@@ -1,6 +1,5 @@
 package Observer_pattern;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface Observer {
