@@ -5,27 +5,38 @@ import Observer_pattern.Subject;
 import Observer_pattern.Observer;
 
 public class Stack implements Subject{
-	/** La pile*/
+	/**
+	 * Liste d'entiers contenant les entiers de la pile
+	 */
 	private List<Integer> stackCont;
 	
-	/** Liste de tous les observateurs de la pile*/
+	/**
+	 * Liste d'observateurs ayant un regard sur la pile
+	 */
 	private List<Observer> lObs;
 	
-	/** Constructeur
-	 * Initialise la pile et la liste des observateurs
+	/** 
+	 * Constructeur de l'objet Stack qui initialise
+	 * 		les liste d'observateurs et la liste d'entiers
 	 */
 	public Stack() {
 		stackCont = new ArrayList<Integer>();
 		lObs = new ArrayList<Observer>();
 	}	
 	
-	/** Ajoute un entier dans la pile et notifie les observateurs*/
+	/**
+	 * Permet l'ajout d'un entier dans la pile
+	 * @param val	Valeur à ajouter sur le dessus de la pile
+	 */
 	public void Push(int val) {
 		stackCont.add(val);
 		Notify();
 	}
 	
-	/** Retire le dernier élément de la pile et notifie les observateurs*/
+	/**
+	 * Retire le dernier element present sur le dessus de la pile et 
+	 * 		notifie les observateurs
+	 */
 	public void Pop() {
 		if(stackCont.size() > 0){
 			stackCont.remove(stackCont.size() -1);
@@ -33,7 +44,9 @@ public class Stack implements Subject{
 		}
 	}
 	
-	/** Vide la pile et notifie les observateurs*/
+	/**
+	 * Vide la pile et notifie tous les observateurs
+	 */
 	public void Clear() {
 		stackCont.clear();
 		Notify();
@@ -41,19 +54,25 @@ public class Stack implements Subject{
 	
 	////////////////////// Methodes intégrant le Pattern Observer //////////////
 	
-	/** Ajoute un observateur*/
+	/**
+	 *  Ajoute un observateur
+	 */
 	public void Attach(Observer obs) {
 		lObs.add(obs);
 	}
 	
-	/** Retire un observateur*/
+	/** 
+	 * Retire un observateur
+	 */
 	public void Detach(Observer obs) {
 		for (Observer ob : lObs)
 			if (ob.equals(obs))
 				lObs.remove(ob);
 	}
 	
-	/** Informe tous les observateurs que l'observable (pile) à changé*/
+	/** 
+	 * Informe tous les observateurs que l'observable (pile) à changer
+	 */
 	public void Notify() {
 		for (Observer obs : lObs) 
 			obs.update(stackCont);		
