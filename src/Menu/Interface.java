@@ -23,7 +23,7 @@ public class Interface {
 			try{
 			stack.Push(Integer.parseInt(Proc.substring(5)));
 			}
-			catch(NumberFormatException e) {
+			catch(Exception e) {
 				System.out.println("Invalid command syntax. Enter push [integer]");
 			}
 		}
