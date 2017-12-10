@@ -9,3 +9,6 @@ pushd8
 push 11
 pop
 quit
+push 7
+push 11
+quit

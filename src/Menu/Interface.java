@@ -1,23 +1,29 @@
 package Menu;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import Stack.Stack;
 
 public class Interface {
-	/** scanner qui lit*/
+	/**
+	 * Objet de type Scanner
+	 */
 	private Scanner sc;
 	
-	/** pile*/
+	/**
+	 * Objet de type Stack (pile)
+	 */
 	private Stack stack;
 	
 	/** Flux de sortie*/
 	private PrintWriter file;
 	
-	/** Constructeur*/
+	/**
+	 * Constructeur de la classe Interface
+	 * @param stack	Objet de type Pile sur lequel les modifications seront faites
+	 */
 	public Interface(Stack stack) {
 		sc = new Scanner(System.in);
 		this.stack = stack;
@@ -30,7 +36,10 @@ public class Interface {
 		run();
 	}
 	
-	/** Analyse et execute la commande saisie par l'utilisateur*/
+	/** 
+	 * Analyse et execute la commande saisie par l'utilisateur
+	 * @param Proc	Commande tapee par l'utilisateur
+	 */
 	private void RequestProc(String Proc) {
 		if(Proc.toLowerCase().startsWith("push")) {
 			try{
@@ -59,7 +68,9 @@ public class Interface {
 		}
 	}
 	
-	/** Terminal*/
+	/** 
+	 * Routine d'utilisation
+	 */
 	public void run() {
 		String processing = null;
 		stack.Clear();

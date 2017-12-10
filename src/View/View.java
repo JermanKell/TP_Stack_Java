@@ -11,18 +11,32 @@ import Observer_pattern.Observer;
 
 public class View extends JFrame{
 	
-	/** Pile*/
+	/**
+	 * Pile liée à la vue
+	 **/
 	private Stack stack;
 	
-	/** Type de fenêtre*/
+	/**
+	 * Identifiant de la vue attachée à la pile
+	 */
 	private int id;
 	
-	/** Champ pour la fenêtre n°1*/
+	/**
+	 * Champ pour la fenetre 1
+	 */
 	private JLabel label;
 	
-	/** Champ pour la fenêtre n°2*/
+	/**
+	 * Champ pour la fenetre 2
+	 */
 	private JList<String> jlist;
 	
+	/**
+	 * Constructeur d'objet de type Vue
+	 * @param typeView	Identifiant de la Vue et qui donne son rôle
+	 * @param stack	Objet de type Stack permettant de recuperer un sous-ensemble
+	 * 		d'entiers pour l'affichage du dessus ou du dessous de la pile
+	 */
 	/** Observateur*/
 	private Observer observer;
 	
@@ -49,18 +63,25 @@ public class View extends JFrame{
 	    addWindowListener(new WindowsEvent());
 	}
 	
-	/** Ferme la fenêtre*/
+	/**
+	 * Permet la fermeture d'une vue
+	 */
 	public void Quit() {
 		stack.Detach(observer);
 		dispose();
 	}
 	
-	/** Accesseur du type de la fenêtre*/
+	/**
+	 * Renvoie l'identifiant d'une Vue correspondant à son rôle
+	 * @return id	
+	 */
 	public int getId() {
 		return id;
 	}
 	
-	/** Configure la fenêtre à sa creation*/
+	/**
+	 * Configure la Vue lors de son appel dans le constructeur de cet objet
+	 */
 	private void ConfigureView() {
 		switch(id) {
 		//fenêtre qui affiche le sommet de la pile
@@ -88,9 +109,9 @@ public class View extends JFrame{
 	}
 	
 	/**
-	 * Fonction assurant la mise a jour du sous tableau de valeurs propre a chaque vue en fonction de leur id
-	 * id = 1 => Affichage du premier nombre du dessus
-	 * id = 2 => Affichage des NbBasPile=5 derniers nombres du dessous
+	 * Permet de mettre à jour la sous-liste d'entiers de la Vue correspondant 
+	 * 		au dessus ou au dessous de la pile
+	 * @param stContent		Liste d'entiers de la pile
 	 */
 	private void updateField(List<Integer> stContent) {
 		int sizeStack = stContent.size();
