@@ -1,2 +1,0 @@
-1 - Est ce que ça vaut le coup qu'on se fasse chier a faire une interface Observateur sachant que Java implemente deja une classe 
-	Observable qui contient toutes les methodes qu'il faut ?
