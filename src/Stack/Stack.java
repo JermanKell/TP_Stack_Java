@@ -65,9 +65,8 @@ public class Stack implements Subject{
 	 * Retire un observateur
 	 */
 	public void Detach(Observer obs) {
-		for (Observer ob : lObs)
-			if (ob.equals(obs))
-				lObs.remove(ob);
+		if(lObs.contains(obs))
+			lObs.remove(obs);
 	}
 	
 	/** 

@@ -1,8 +1,9 @@
 package View;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.*;
 import javax.swing.*;
 import Stack.Stack;
@@ -36,6 +37,10 @@ public class View extends JFrame{
 	 * @param stack	Objet de type Stack permettant de recuperer un sous-ensemble
 	 * 		d'entiers pour l'affichage du dessus ou du dessous de la pile
 	 */
+	/** Observateur*/
+	private Observer observer;
+	
+	/** Constructeur de la fenêtre*/
 	public View(int typeView, Stack stack) {
 		this.stack = stack;
 		id = typeView;
@@ -47,18 +52,22 @@ public class View extends JFrame{
 	    ConfigureView();
 	    setVisible(true);
 	    
-	    // Ajoute la fenêtre en tant qu'observateur de la pile
-	    this.stack.Attach(new Observer(){
-	      public void update(List<Integer> stContent) {
-	    	  updateField(stContent);
-	      }
-	    });
+	 // Ajoute la fenêtre en tant qu'observateur de la pile
+	    observer = new Observer(){
+		      public void update(List<Integer> stContent) {
+		    	  updateField(stContent);
+		      }
+		    };
+	    this.stack.Attach(observer);
+	    
+	    addWindowListener(new WindowsEvent());
 	}
 	
 	/**
 	 * Permet la fermeture d'une vue
 	 */
 	public void Quit() {
+		stack.Detach(observer);
 		dispose();
 	}
 	
@@ -128,6 +137,44 @@ public class View extends JFrame{
 				else
 					dlm.addElement("pile vide");
 				break;
+		}
+	}
+	
+	/** Redéfinition de l'interface WindowListener pour retirer l'observateur lors de la fermeture de la fenêtre*/
+	class WindowsEvent implements WindowListener {
+		@Override
+		public void windowClosing(WindowEvent e) {
+			Quit();
+		}
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
 		}
 	}
 }
