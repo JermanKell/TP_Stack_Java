@@ -12,3 +12,36 @@ quit
 push 7
 push 11
 quit
+push 12
+push 25
+PUSH 15
+quit
+push 25
+push 30
+push -100
+clear
+push 15
+push 125
+push 254
+push 25
+push 14
+push 14
+push 5247
+pop
+pop
+pop
+pop
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit
+quit

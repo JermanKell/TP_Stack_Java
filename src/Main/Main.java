@@ -16,8 +16,8 @@ public class Main
 	public static void main(String[] args) 
 	{
 		Stack pile = new Stack();
-		new View(1, pile);
-		new View(2, pile);
+		View v1 = new View(1, pile);
+		View v2 = new View(2, pile);
 		new Interface(pile);
 	}	
 }	

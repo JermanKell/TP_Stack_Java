@@ -2,6 +2,7 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.*;
@@ -38,37 +39,45 @@ public class View extends JFrame{
 	 * 		d'entiers pour l'affichage du dessus ou du dessous de la pile
 	 */
 	/** Observateur*/
-	private Observer observer;
+	private Observer observer = null;
 	
 	/** Constructeur de la fenêtre*/
 	public View(int typeView, Stack stack) {
+		//mauvais paramêtre: ferme la fenêtre
+		if(id != 1 && id!= 2)
+			Quit();
 		this.stack = stack;
 		id = typeView;
 		
 		setTitle(Integer.toString(id));
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		setAlwaysOnTop(true);
 	    ConfigureView();
 	    setVisible(true);
 	    
-	 // Ajoute la fenêtre en tant qu'observateur de la pile
+		 // Ajoute la fenêtre en tant qu'observateur de la pile
 	    observer = new Observer(){
 		      public void update(List<Integer> stContent) {
 		    	  updateField(stContent);
 		      }
 		    };
 	    this.stack.Attach(observer);
-	    
-	    addWindowListener(new WindowsEvent());
+	    addWindowListener(new WindowAdapter() {
+	        @Override
+	        public void windowClosing(WindowEvent event) {
+	        	Quit();
+	        }
+	    });
 	}
 	
 	/**
 	 * Permet la fermeture d'une vue
 	 */
 	public void Quit() {
-		stack.Detach(observer);
-		dispose();
+		if(observer != null)
+			stack.Detach(observer);
+		this.dispose();
 	}
 	
 	/**
@@ -100,11 +109,8 @@ public class View extends JFrame{
 			jlist.setCellRenderer(centerRenderer);
 			getContentPane().add(jlist, BorderLayout.CENTER);
 			setSize(250, 200);
-			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/ 2, Toolkit.getDefaultToolkit().getScreenSize().height / 4);
+			setLocation((Toolkit.getDefaultToolkit().getScreenSize().width/ 4) + 250 , Toolkit.getDefaultToolkit().getScreenSize().height / 4);
 			break;
-		//mauvais paramêtre: ferme la fenêtre
-		default:
-			Quit();
 		}
 	}
 	
@@ -137,44 +143,6 @@ public class View extends JFrame{
 				else
 					dlm.addElement("pile vide");
 				break;
-		}
-	}
-	
-	/** Redéfinition de l'interface WindowListener pour retirer l'observateur lors de la fermeture de la fenêtre*/
-	class WindowsEvent implements WindowListener {
-		@Override
-		public void windowClosing(WindowEvent e) {
-			Quit();
-		}
-
-		@Override
-		public void windowOpened(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowClosed(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowIconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowActivated(WindowEvent e) {
-			// TODO Auto-generated method stub
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent e) {
-			// TODO Auto-generated method stub
 		}
 	}
 }

@@ -41,7 +41,7 @@ public class Interface {
 	 * @param Proc	Commande tapee par l'utilisateur
 	 */
 	private void RequestProc(String Proc) {
-		if(Proc.toLowerCase().startsWith("push")) {
+		if(Proc.toLowerCase().startsWith("push ")) {
 			try{
 			stack.Push(Integer.parseInt(Proc.substring(5)));
 			file.println(Proc);
